@@ -113,7 +113,7 @@ public class BitBucketTrigger extends Trigger<Job<?, ?>> {
 
     @Override
     public Collection<? extends Action> getProjectActions() {
-        return Collections.singleton(new BitBucketWebHookPollingAction());
+        return Collections.singleton(new BitBucketWebHookPollingAction(job));
     }
 
     /**
@@ -137,11 +137,18 @@ public class BitBucketTrigger extends Trigger<Job<?, ?>> {
     }
 
     /**
-     * Action object for {@link Project}. Used to display the polling log.
+     * Action object for {@link Job}. Used to display the polling log.
      */
     public final class BitBucketWebHookPollingAction implements Action {
+
+        private final Job owner;
+
+        BitBucketWebHookPollingAction(final Job job) {
+            this.owner = job;
+        }
+
         public Job<?,?> getOwner() {
-            return job;
+            return owner;
         }
 
         public String getIconFileName() {
